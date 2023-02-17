@@ -4,7 +4,7 @@ name: MyDeploy
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   Kill_Docker:
