@@ -1,0 +1,31 @@
+name: MyDeploy
+
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  Kill_Docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: touch private_key && echo -e "${{ secrets.SSH_PRIVATE_KEY }}" > private_key && chmod 600 private_key
+      - run: ssh  -i private_key -o StrictHostKeyChecking=no root@92.63.102.121
+      - run: ssh  -i private_key root@92.63.102.121 'docker kill backend_web_1; docker rm backend_web_1; rm -rf ~/Backend'
+  Update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: touch private_key && echo -e "${{ secrets.SSH_PRIVATE_KEY }}" > private_key && chmod 600 private_key
+      - run: ssh -i private_key -o StrictHostKeyChecking=accept-new root@92.63.102.121
+      - run: ssh -i private_key root@92.63.102.121 'git clone https://github.com/Donut-Panik-Bit/Backend'
+  Run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: touch private_key && echo -e "${{ secrets.SSH_PRIVATE_KEY }}" > private_key && chmod 600 private_key
+      - run: ssh -i private_key -o StrictHostKeyChecking=accept-new root@92.63.102.121
+      - run: ssh -i private_key root@92.63.102.121 'cd ~/Backend; docker-compose build --no-cache; docker-compose up -d; docker exec -it backend_web_1 bash; make upgrade_head'
+
