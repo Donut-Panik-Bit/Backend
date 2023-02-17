@@ -9,6 +9,7 @@ services:
         - POSTGRES_USER=postgres
         - POSTGRES_PASSWORD=postgres
     restart: always
+    network_mode: "host"
   web:
     build:
       context: .
@@ -23,3 +24,4 @@ services:
       - DATABASE_URL=postgresql://postgres:postgres@db:5432/hack_bit
       - SERVER_PORT=80
     restart: always
+    network_mode: "host"
