@@ -13,7 +13,7 @@ chat_router = APIRouter(tags=["Chat"])
 manager = ConnectionManager()
 
 
-@chat_router.get("/ws/all", response_model=[Chat])
+@chat_router.get("/ws/all")
 async def websockets_pull(current_user: str = Depends(get_current_user),
                           session: AsyncSession = Depends(get_session)):
     await check_role(current_user, session)
