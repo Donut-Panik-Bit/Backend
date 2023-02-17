@@ -17,7 +17,7 @@ manager = ConnectionManager()
 async def websockets_pull(current_user: str = Depends(get_current_user),
                           session: AsyncSession = Depends(get_session)):
     await check_role(current_user, session)
-    return manager.
+    pass
 
 
 @chat_router.websocket("/ws/{client_id}")
