@@ -7,6 +7,8 @@ from app.db.connection import get_session
 from app.schemas.chat import Chat
 from typing import List
 
+from ..GranatHelper.GranatManager import GranatManager
+
 chat_router = APIRouter(tags=["Chat"])
 
 
@@ -26,7 +28,8 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
     try:
         while True:
             data = await websocket.receive_text()
-            await manager.send_personal_message(f"You wrote: {data}", websocket)
+            answer = GranatManager.handle(str(data))
+            await manager.send_personal_message(answer, websocket)
     except WebSocketDisconnect:
         manager.disconnect(websocket)
         await manager.broadcast(f"Client #{client_id} left the chat")
