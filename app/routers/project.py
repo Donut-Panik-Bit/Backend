@@ -7,6 +7,8 @@ from app.schemas.auth import SuccessfulResponse
 from app.schemas.project import ProjectRequestPut, ProjectRequest, ProjectResponse
 from typing import List
 
+from fastapi.responses import JSONResponse
+
 project_router = APIRouter(tags=["Project"])
 
 import datetime
@@ -68,4 +70,4 @@ async def get_project_time(
     current_user=Depends(get_current_user),
 ) -> ProjectResponse:
     # await check_admin(current_user, session)
-    return TIME
+    return JSONResponse(str(TIME))
