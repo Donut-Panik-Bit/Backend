@@ -28,7 +28,7 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
     try:
         while True:
             data = await websocket.receive_text()
-            answer = GranatManager.handle(str(data))
+            answer = GranatManager.handle(msg=data)
             await manager.send_personal_message(answer, websocket)
     except WebSocketDisconnect:
         manager.disconnect(websocket)

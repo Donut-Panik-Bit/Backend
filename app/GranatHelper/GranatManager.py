@@ -8,11 +8,12 @@ hellos_exml = [
     "Привет", "Ку", "Хей"
 ]
 
+
 class GranatManager:
     def __init__(self) -> None:
         pass
 
-    def handle(self, msg: str) -> None:
+    def handle(msg: str) -> None:
         msg = msg.capitalize()
         if msg in hellos_exml:
             return "Привет, меня зовут Гранат!"
