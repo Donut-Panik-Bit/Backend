@@ -9,6 +9,8 @@ from typing import List
 
 project_router = APIRouter(tags=["Project"])
 
+import datetime
+TIME = datetime.datetime(year=2023, month=2, day=20, hour=0, minute=0)
 
 @project_router.post(
     "/project/new",
@@ -55,3 +57,15 @@ async def put_project_route(
         current_user
     )
     return SuccessfulResponse()
+
+@project_router.get(
+    "/project/time",
+    status_code=status.HTTP_200_OK,
+    response_model=ProjectResponse,
+)
+async def get_project_time(
+    session: AsyncSession = Depends(get_session),
+    current_user=Depends(get_current_user),
+) -> ProjectResponse:
+    # await check_admin(current_user, session)
+    return TIME
