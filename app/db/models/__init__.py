@@ -2,6 +2,7 @@ from app.db.models.models import (
     DeclarativeBase,
     Users,
     User_type,
+    Project,
 )
 
 __all__ = [
@@ -11,4 +12,5 @@ __all__ = [
     "CategoriesModel",
     "ProductCategoriesModel",
     "DeclarativeBase",
+    "Project"
 ]
