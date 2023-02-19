@@ -1,21 +1,30 @@
-from fastapi import WebSocket
+#from fastapi import WebSocket
+import json
 
-hellos_exml = [
-    "Привет", "Здравствуйте",
-    "Добрый день", "Добрый вечер",
-    "Здарова", "Приветствую",
-    "День добрый", "Вечер добрый",
-    "Привет", "Ку", "Хей"
-]
+from fuzzywuzzy import fuzz
+
+
+СOMMANDS = []
+
+
+with open('rules.json', 'r') as f:
+    СOMMANDS = json.load(f)
 
 
 class GranatManager:
     def __init__(self) -> None:
         pass
 
-    def handle(msg: str) -> None:
-        msg = msg.capitalize()
-        if msg in hellos_exml:
-            return "Привет, меня зовут Гранат!"
-        else:
-            return "Извини, я ничего не понял. Попробуй еще раз"
+    def handle(string: str) -> None:
+
+        q = string.replace(',','').replace('.','')\
+        .replace('?','').replace("!",'')\
+            .lower().strip()
+
+        for command in СOMMANDS:
+
+            rez = fuzz.partial_ratio(command['title'].lower(), q)
+            if rez >= 80:
+                return command['result']
+    
+        return "Похоже, что мне ничего не удалось найти :("
