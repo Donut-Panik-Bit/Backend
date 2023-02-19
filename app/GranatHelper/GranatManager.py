@@ -75,7 +75,7 @@ class GranatManager:
     def __init__(self) -> None:
         pass
 
-    def handle(self, msg: str) -> None:
+    def handle(msg: str) -> None:
 
         q = msg.replace(',','').replace('.','')\
         .replace('?','').replace("!",'')\
